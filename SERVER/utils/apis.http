@@ -1,4 +1,5 @@
 ### Register test
 
-POST http://localhost:5000/api/auth/register
+POST   http://localhost:5000/api/auth/register
 Content-Type: application/json
+

@@ -1,3 +1,16 @@
 npx sequelize-cli model:generate --name Role --attributes firstName:string,lastName:string,email:string
 
 ánh xạ migrate xuống database
+
+npx sequelize-cli db:migrate  -- migrate toàn bộ
+
+
+
+npx sequelize-cli db:migrate:undo  --> Hoàn lại
+
+    //  password, phone, name, role = [USER, AGENT]
+    // client = urlencode || formdata => req.body
+    // client = param ==> req.query 
+    // client api/user/:d  =>   req.param
+    
+

@@ -13,16 +13,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,  allowNull: false, unique: true
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING, allowNull: true, unique: true
       },
       address: {
         type: Sequelize.STRING
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING, allowNull: false, unique: true
       },
       role: {
         type: Sequelize.INTEGER

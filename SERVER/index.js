@@ -15,11 +15,8 @@ app.use(express.urlencoded({
     extended: true
 }))
 initRoutes(app);
-
 dbConn();
-
 const PORT = process.env.PORT || 8000
-
 app.use('/', (req, res) => res.send('server on 12'))
 
 app.listen(PORT, () => console.log("server ready 123 on +", PORT))

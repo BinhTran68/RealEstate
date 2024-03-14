@@ -1,18 +1,18 @@
 const asyncHandler = require('express-async-handler')
+const db = require("../models")
 
 
+// Bọc asyncHandler để xử lí exception và validate
 const register = asyncHandler(async (req, res) => {
-    //  password, phone, name, role = [USER, AGENT]
-    // client = urlencode || formdata => req.body
-    // client = param ==> req.query 
-    // client api/user/:d  =>   req.param
-    
     const {password, phone, name, role} = req.body;
     
+    const response = await db.User.findOrCreate({where: {phone: phone}, defaults: req.body })
+
+    console.log(response);
+
     return res.json({
         success: true,
         mes: 'API OKI',
-        data: { password, phone, name, role } 
     })
 })
 
