@@ -1,0 +1,3 @@
+npx sequelize-cli model:generate --name Role --attributes firstName:string,lastName:string,email:string
+
+ánh xạ migrate xuống database
