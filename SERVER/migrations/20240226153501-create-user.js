@@ -1,4 +1,5 @@
 'use strict';
+const {ENUM_ROLE} = require("../utils/utilsValue");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -7,7 +8,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        defaultValue: Sequelize.literal("gen_random_uuid()")
       },
       name: {
         type: Sequelize.STRING
@@ -25,7 +26,9 @@ module.exports = {
         type: Sequelize.STRING, allowNull: false, unique: true
       },
       role: {
-        type: Sequelize.INTEGER
+        type: Sequelize.ENUM(ENUM_ROLE),
+        defaultValue: "USER"
+
       },
       avatar: {
         type: Sequelize.STRING

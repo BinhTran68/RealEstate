@@ -1,5 +1,9 @@
 ### Register test
 
-POST   http://localhost:5000/api/auth/register
+POST   http://localhost:5000/api/auth/signin
 Content-Type: application/json
 
+{
+  "phone" : "12333333",
+  "password" : "123"
+}

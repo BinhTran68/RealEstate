@@ -7,7 +7,8 @@ const errHandler = (error, req, res, next) => {
     })
 }
 const throwErrorWithStatus = (statusCode, message, res, next) => {
-    const error = new Error(message);
+    const errorMes = message?.replaceAll(`\"`,  "")
+    const error = new Error(errorMes);
     res = res.status(statusCode);
     next(error)
 }

@@ -8,12 +8,10 @@ const validateDTO = (schema) => (req, res, next) => {
     }
     next()
 }
-
 // const validateUniquePhone = async (req, res, next) => {
 //     try {
 //         const { phone } = req.body;
 //         const exitUserByPhone = await User.findOne({where: {phone : req.body.phone}} )
-
 //     } catch (error) {
 //         console.log(error);
 //         return res.status(500).json({
@@ -21,7 +19,5 @@ const validateDTO = (schema) => (req, res, next) => {
 //         })
 //     }
 // }
-
-
 
 module.exports = validateDTO
