@@ -6,9 +6,12 @@ const {sign} = require("jsonwebtoken");
 
 
 // Bọc asyncHandler để xử lí exception và validate
-const register = asyncHandler(async (req, res) => {
+const register = asyncHandler(async (req, res, next) => {
     const {password, phone, name, role} = req.body;
     const response = await db.User.findOrCreate({where: {phone: phone}, defaults: req.body })
+    // if (!response[1]) {
+    //     return  throwErrorWithStatus(409, "PhoneNumber already had exits",res, next);
+    // }
     return res.json({
         success: response[1],
         message: response[1] ? 'Your account is created.' : 'PhoneNumber already had exits'
@@ -19,7 +22,7 @@ const register = asyncHandler(async (req, res) => {
 // signIn
 const signIn = asyncHandler(async (req, res, next) => {
     const {phone, password} = req.body;
-     const user = await db.User.findOne({
+    const user = await db.User.findOne({
         where: { phone }
     })
     if (!user) {

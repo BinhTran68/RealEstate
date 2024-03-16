@@ -1,9 +1,22 @@
 ### Register test
 
+POST   http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name" : "binh123",
+  "phone" : "12366",
+  "password" : "123",
+  "role" : "AGENT"
+}
+
+
+### Login test
+
 POST   http://localhost:5000/api/auth/signin
 Content-Type: application/json
 
 {
-  "phone" : "12333333",
+  "phone" : "123",
   "password" : "123"
 }

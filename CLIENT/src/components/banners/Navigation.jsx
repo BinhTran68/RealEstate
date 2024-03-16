@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import  logo  from '~/assets/logo.svg'
-import { Button, Login } from '../index'
+import { Button, Auth } from '../index'
 import { navigations } from '~/utils/contants'
 import clsx from 'clsx'
 import withRouter from '~/hocs/withRouter'
@@ -36,7 +36,7 @@ const Navigation = ({location}) => {
           <Button  
           children={"Sign In"} 
           className={twMerge(clsx( location.pathname === '/' && 'bg-transparent border border-main-100'))}
-          handleOnclick={() => setModal(true, <Login/>)} // hàm set content modal cho useAppStore();
+          handleOnclick={() => setModal(true, <Auth/>)} // hàm set content modal cho useAppStore();
           >
           </Button>
           :

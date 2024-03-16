@@ -27,3 +27,5 @@ export const navigations = [
         text: 'SEARCH'        
     }
 ]
+
+export const URL = "http://localhost:5000";
