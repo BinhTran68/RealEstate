@@ -2,35 +2,63 @@ import clsx from 'clsx';
 import React, { useEffect, useState } from 'react'
 import { Button, InputFrom, InputRadio } from '..';
 import { useForm } from 'react-hook-form';
-import { apiRegister } from '~/api/auth';
+import { apiLogin, apiRegister } from '~/api/auth';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { useAppStore } from '~/store/useAppStore';
+import { useUserStore } from '~/store/useUserStore';
+
 
 const Auth = () => {
 
   const [variant, setVariant] = useState('LOGIN');
 
-  const { register, formState: { errors }, handleSubmit, reset } = useForm(); // 
+  const { register, formState: { errors }, handleSubmit, reset } = useForm(); 
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { setModal }  = useAppStore();
+
+  const { token ,setToken } = useUserStore();
+
+  console.log(token);
 
   useEffect(() => {
     reset()
   }, [variant])
 
+  
   const handleOnSubmit = async (data) => {
-    const respone = await apiRegister(data);
-    if (respone.success) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Congrats',
-        text: respone.message,
-        showConfirmButton: true,
-        confirmButtonText: 'Go sign in'
-      }).then(({ isConfirmed }) => {
-        if (isConfirmed) setVariant("LOGIN")
-      })
-    } else {
-      toast.error(respone.message)
+    if (variant === "REGISTER") {
+      setIsLoading(true);
+      const respone = await apiRegister(data);
+      setIsLoading(false);
+      if (respone.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Congrats',
+          text: respone.message,
+          showConfirmButton: true,
+          confirmButtonText: 'Go sign in'
+        }).then(({ isConfirmed }) => {
+          if (isConfirmed) setVariant("LOGIN")
+        })
+      } else {
+        toast.error(respone.message)
+      }
+    }else {
+      const {name, role, ...payload} = data 
+      setIsLoading(true);  
+      const respone = await apiLogin(payload);
+      setIsLoading(true);
+      if (respone.success) {
+        toast.success(respone.message)
+        setModal(false, null);
+        
+      }
+      return setIsLoading(false);
     }
+
   }
 
   return (
@@ -61,6 +89,7 @@ const Auth = () => {
             }
           }}
           errors={errors}
+          autoComplete='tel'
         />
         <InputFrom
           label={'Password'}
@@ -71,8 +100,8 @@ const Auth = () => {
           type='password'
           validate={{ required: 'Password field cannot empty.' }}
           errors={errors}
+          autoComplete='current-password'
         />
-
         {variant !== 'LOGIN' &&
           <InputFrom
             label={'Your Fullname'}
@@ -108,7 +137,7 @@ const Auth = () => {
             ]}
           />
         }
-        <Button handleOnclick={handleSubmit(handleOnSubmit)} className={'py-2 mt-5 mb-2 '}>
+        <Button handleOnclick={handleSubmit(handleOnSubmit)} disabled={isLoading} className={'py-2 mt-5 mb-2 '}>
           {variant === 'LOGIN' ? 'Sign in' : 'Register'}
         </Button>
         <span className='cursor-pointer hover:underline w-full text-center text-main-500'>
