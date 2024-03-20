@@ -50,13 +50,13 @@ const Auth = () => {
       const {name, role, ...payload} = data 
       setIsLoading(true);  
       const respone = await apiLogin(payload);
-      setIsLoading(true);
       if (respone.success) {
+        console.log(respone);
         toast.success(respone.message)
+        setToken(respone.token)
         setModal(false, null);
-        
       }
-      return setIsLoading(false);
+      setIsLoading(false);
     }
 
   }

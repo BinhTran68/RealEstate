@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import path from './utils/path';
 import { AboutUs, Home, OurAgents, Properties, PublicLayout, Search } from './pages/public';
@@ -6,9 +6,17 @@ import { Modal } from './components';
 import { useAppStore } from './store/useAppStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useUserStore } from './store/useUserStore';
 
 const App = () => {
     const { isShowModal } = useAppStore();
+
+    const { getCurrentUser, current, token } = useUserStore();
+    useEffect(() => {
+        if (token) {
+            getCurrentUser()
+        }
+    }, [token])
 
     return (
         <>

@@ -40,7 +40,7 @@ const Navigation = ({location}) => {
           >
           </Button>
           :
-          <Button children={"Add listing"} className={twMerge(clsx( location.pathname === '/' && 'bg-transparent border border-main-100'))} >
+          <Button children={"Add listing"} className={twMerge(clsx( location.pathname === '/' && 'bg-transparent border text-main-500 border-main-500'))} >
           </Button>
            }
 

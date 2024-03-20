@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
+import { apiGetCurrentByToken } from '~/api/user';
 
 // Create in zustand. it can create a store to manage state application
 // create useUserStore to mange auth app 
@@ -7,7 +8,13 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 export const useUserStore = create(persist((set, get) => ({
     token: null,
     current: null,
-    setToken: (newToken) => set(() => ({ token : newToken })) // function token have token. use set in zustand set value token in 
+    setToken: (newToken) => set(() => ({ token: newToken })), // function token have token. use set in zustand set value token in 
+    getCurrentUser: async () => {
+        const response = await apiGetCurrentByToken()
+        if (response.success) {
+            return set(() => ({ current: response.currentUser }))
+        }
+    }
 }),
     {
         name: 'BatDongSan.com',
