@@ -1,6 +1,12 @@
 const ENUM_ROLE = ['ADMIN', 'AGENT', 'USER'];
 
+const ENUM_LISTING_TYPE = ['SALE', 'RENTAL']
+
+const ENUM_STATUS_PROPERTY = ['PENDING', 'CANCEL', 'APPROVED']
+
 module.exports = {
-    ENUM_ROLE
+    ENUM_ROLE,
+    ENUM_STATUS_PROPERTY,
+    ENUM_LISTING_TYPE
 }
 

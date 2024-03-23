@@ -11,7 +11,7 @@ module.exports = {
         defaultValue: Sequelize.literal("gen_random_uuid()")
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING, allowNull: false
       },
       phone: {
         type: Sequelize.STRING,  allowNull: false, unique: true
@@ -25,9 +25,12 @@ module.exports = {
       password: {
         type: Sequelize.STRING, allowNull: false, unique: true
       },
-      role: {
-        type: Sequelize.ENUM(ENUM_ROLE),
-        defaultValue: "USER"
+      roleCode: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'Roles',
+          key: 'code'
+        }
 
       },
       avatar: {
