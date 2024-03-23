@@ -32,7 +32,7 @@ const signIn = asyncHandler(async (req, res, next) => {
     if (!isMatchingPassword) {
         return throwErrorWithStatus(403, "Password is wrong", res, next)
     }
-    const token = sign({uuid: user.id, role: user.role}, process.env.JWT_SECRET, {expiresIn: '7d'})
+    const token = sign({uuid: user.id, roleCode: user.roleCode}, process.env.JWT_SECRET, {expiresIn: '7d'})
 
     return res.json({
         success: true,

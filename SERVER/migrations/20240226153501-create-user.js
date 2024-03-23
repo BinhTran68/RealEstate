@@ -1,5 +1,5 @@
 'use strict';
-const {ENUM_ROLE} = require("../utils/utilsValue");
+const {roles} = require("../utils/constants");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -30,7 +30,8 @@ module.exports = {
         references: {
           model: 'Roles',
           key: 'code'
-        }
+        },
+        defaultValue: "CLIENT" // Default register is CLIENT
 
       },
       avatar: {

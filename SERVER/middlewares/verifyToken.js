@@ -2,6 +2,7 @@
 // When expressJs use API alway has req, res and next. next to middleware  or route function next
 const { throwErrorWithStatus } = require("./errorHandler");
 const jwt = require('jsonwebtoken');
+const db = require("../models")
 
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization;
@@ -20,6 +21,54 @@ const verifyToken = (req, res, next) => {
     });
 };
 
+// Check a request isAgent or none. if agent can continue to the router. Rol 7
+/*
+   {
+        code: 'ADMIN',
+        value: 'Quản Trị Viên'  // ROL1
+    },
+    {
+        code: 'PROPERTY_OWNER', // ROL3
+        value: 'Chủ tài sản'
+    },
+    {
+        code: 'BROKER',  // ROL5
+        value: 'Người môi giới'
+    },
+    {
+        code: 'CLIENT', // ROL7
+        value: 'Khách hàng'
+    },
+ */
+
+
+const isClient =  (req, res, next) => {
+    const { roleCode } = req.user
+    if (roleCode === "CLIENT") {
+        return throwErrorWithStatus(401, "Doesn't have access", res, next)
+    }
+    next()
+}
+const isPropertyOwner =  (req, res, next) => {
+    const { roleCode } = req.user
+    if (roleCode === "CLIENT" || roleCode === "BROKER") {
+        return throwErrorWithStatus(401, "Doesn't have access", res, next)
+    }
+    next()
+}
+const isAdmin =  (req, res, next) => {
+    const { roleCode } = req.user
+    if (roleCode !== "ADMIN") {
+        return throwErrorWithStatus(401, "Doesn't have access", res, next)
+    }
+    next()
+}
+
+
+
 module.exports = {
-    verifyToken
+    verifyToken,
+    isPropertyOwner,
+    isClient,
+    isAdmin
 };

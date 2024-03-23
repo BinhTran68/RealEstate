@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const {ENUM_ROLE} = require("../utils/utilsValue");
 const bcrypt = require("bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -27,12 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         this.setDataValue('password', bcrypt.hashSync(value, salt))
       },
     },
-    role: {
-      type: DataTypes.ENUM,
-      values: ENUM_ROLE
-    },
+    roleCode: DataTypes.STRING,
     avatar: DataTypes.STRING,
-
   }, {
     sequelize,
     modelName: 'User',

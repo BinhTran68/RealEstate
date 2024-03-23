@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const {ENUM_LISTING_TYPE, ENUM_STATUS_PROPERTY} = require("../utils/utilsValue");
+const {ENUM_LISTING_TYPE, ENUM_STATUS_PROPERTY} = require("../utils/constants");
 module.exports = (sequelize, DataTypes) => {
   class Property extends Model {
     /**
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     bathRoom : DataTypes.INTEGER,
     propertySize : DataTypes.FLOAT,
     yearBuild : DataTypes.INTEGER,
-
+    owner: DataTypes.UUID,  // Migration 20240323152748-modify_property_add_cloumn_ower.js
   }, {
     sequelize,
     modelName: 'Property',
