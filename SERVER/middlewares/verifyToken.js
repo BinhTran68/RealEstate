@@ -1,6 +1,5 @@
-
 // When expressJs use API alway has req, res and next. next to middleware  or route function next
-const { throwErrorWithStatus } = require("./errorHandler");
+const {throwErrorWithStatus} = require("./errorHandler");
 const jwt = require('jsonwebtoken');
 const db = require("../models")
 
@@ -42,28 +41,32 @@ const verifyToken = (req, res, next) => {
  */
 
 
-const isClient =  (req, res, next) => {
-    const { roleCode } = req.user
-    if (roleCode === "CLIENT") {
+const isClient = (req, res, next) => {
+    const {roleCode} = req.user
+    if (roleCode === "BROKER" || roleCode === "ADMIN" || roleCode === "PROPERTY_OWNER") {
+        next()
+    } else {
         return throwErrorWithStatus(401, "Doesn't have access", res, next)
     }
-    next()
 }
-const isPropertyOwner =  (req, res, next) => {
-    const { roleCode } = req.user
-    if (roleCode === "CLIENT" || roleCode === "BROKER") {
+const isPropertyOwner = (req, res, next) => {
+    const {roleCode} = req.user
+    if (roleCode === "ADMIN" || roleCode === "PROPERTY_OWNER") {
+        next()
+    } else {
         return throwErrorWithStatus(401, "Doesn't have access", res, next)
     }
-    next()
-}
-const isAdmin =  (req, res, next) => {
-    const { roleCode } = req.user
-    if (roleCode !== "ADMIN") {
-        return throwErrorWithStatus(401, "Doesn't have access", res, next)
-    }
-    next()
-}
 
+}
+const isAdmin = (req, res, next) => {
+    const {roleCode} = req.user
+    if (roleCode === "ADMIN") {
+        next()
+    } else {
+        return throwErrorWithStatus(401, "Doesn't have access", res, next)
+    }
+
+}
 
 
 module.exports = {

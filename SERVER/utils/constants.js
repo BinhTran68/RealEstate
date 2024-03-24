@@ -21,9 +21,12 @@ const roles = [
     },
 ]
 
+
+
+
 module.exports = {
     ENUM_STATUS_PROPERTY,
     ENUM_LISTING_TYPE,
-    roles
+    roles,
 }
 
