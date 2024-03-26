@@ -15,7 +15,7 @@ router.post('/',
     })),
     propertyTypeController.createNewPropertyType)
 
-router.get("/", propertyTypeController.getPropertyTypes)
+router.get("/", propertyTypeController.getPropertyTypesController)
 router.patch("/:id",
     verifyToken,
     isAdmin,
