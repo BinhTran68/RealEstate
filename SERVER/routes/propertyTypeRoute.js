@@ -16,5 +16,17 @@ router.post('/',
     propertyTypeController.createNewPropertyType)
 
 router.get("/", propertyTypeController.getPropertyTypes)
+router.patch("/:id",
+    verifyToken,
+    isAdmin,
+    validateDTO(Joi.object({
+        name: string,
+        description: string,
+        image: string
+    })),
+    propertyTypeController.updatePropertyTypes)
+
+router.delete("/:id",verifyToken, isAdmin, propertyTypeController.removePropertyTypes)
+
 
 module.exports = router

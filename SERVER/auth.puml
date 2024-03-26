@@ -1,0 +1,36 @@
+@startuml
+participant Client
+participant Router
+participant Controller
+
+Client -> Router: POST /
+activate Router
+Router -> Controller: verifyToken
+activate Controller
+Controller -> Controller: Validate token
+Controller --> Router: Token validated
+deactivate Controller
+Router -> Controller: isAdmin
+activate Controller
+Controller -> Controller: Check admin role
+Controller --> Router: Admin role verified
+deactivate Controller
+Router -> Controller: validateDTO(Joi.object(...))
+activate Controller
+Controller -> Controller: Validate data
+Controller -> Controller: Create new property type
+Controller --> Router: Property type created
+deactivate Controller
+Router --> Client: Return response
+deactivate Router
+
+Client -> Router: GET /
+activate Router
+Router -> Controller: getPropertyTypes
+activate Controller
+Controller -> Controller: Retrieve property types
+Controller --> Router: Property types retrieved
+deactivate Controller
+Router --> Client: Return response
+deactivate Router
+@enduml
