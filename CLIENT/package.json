@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.7",
+    "@tinymce/tinymce-react": "^5.0.0",
     "axios": "^1.6.7",
     "clsx": "^2.1.0",
     "dotenv": "^16.4.5",

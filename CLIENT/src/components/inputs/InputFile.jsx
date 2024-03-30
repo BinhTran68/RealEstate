@@ -1,13 +1,12 @@
 import clsx from 'clsx'
 import React from 'react'
+import { FaCloudUploadAlt } from 'react-icons/fa'
 import { twMerge } from 'tailwind-merge'
 
-const InputFrom = ({
-  style = 'form-input',
+const InputFile = ({
   containerClassname,
   label,
   id,
-  type = 'text',
   register,
   errors,
   inputClassname,
@@ -17,18 +16,27 @@ const InputFrom = ({
 }) => {
   return (
     <div className={twMerge(clsx('flex flex-col gap-2 w-full', containerClassname))}>
-      {label && <label className='font-medium text-main-700' htmlFor={id}>{label}</label>}
+      {label && <span className='font-medium text-main-700'>{label}</span>}
       <input
-        type={type}
+        className='hidden'
+        type='file'
         id={id}
-        className={twMerge(clsx(style, 'placeholder:text-sm ', inputClassname, errors && errors[id] && 'border-red-500 focus:border-red-500 focus:ring-red-500'))}
         {...register(id, validate)}
         placeholder={placeholder}
         {...restProps}
       />
+      <label htmlFor={id} className='bg-gray-100 w-full p-16 flex items-center flex-col gap-2 justify-center'> 
+        <span className='text-5xl text-gray-300'>
+            <FaCloudUploadAlt/>
+        </span>
+        <small className='text-gray-300 italic'>
+            Only support image with extension JPEG, PNG, JPG.
+        </small>
+
+      </label>
       {errors && errors[id] && <small className='text-red-500'>{errors[id]?.message}</small>}
     </div>
   )
 }
 
-export default InputFrom
+export default InputFile
