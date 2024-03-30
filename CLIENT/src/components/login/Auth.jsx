@@ -19,7 +19,7 @@ const Auth = () => {
 
   const { setModal }  = useAppStore();
 
-  const { token ,setToken } = useUserStore();
+  const { token ,setToken,roles } = useUserStore();
 
   console.log(token);
 
@@ -123,18 +123,7 @@ const Auth = () => {
             id={'role'}
             type='text'
             validate={{ required: 'This field cannot empty.' }}
-            options={[
-              {
-                label: "User",
-                value: "USER",
-                checked: true
-              },
-              {
-                label: "Agent",
-                value: "AGENT",
-                checked: false
-              },
-            ]}
+            options={roles?.filter(el => el.code !== "ADMIN").map(el => ({label: el.value, value: el.code}))}
           />
         }
         <Button handleOnclick={handleSubmit(handleOnSubmit)} disabled={isLoading} className={'py-2 mt-5 mb-2 '}>

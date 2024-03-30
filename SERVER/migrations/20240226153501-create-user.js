@@ -25,15 +25,6 @@ module.exports = {
       password: {
         type: Sequelize.STRING, allowNull: false, unique: true
       },
-      roleCode: {
-        type: Sequelize.STRING,
-        references: {
-          model: 'Roles',
-          key: 'code'
-        },
-        defaultValue: "CLIENT" // Default register is CLIENT
-
-      },
       avatar: {
         type: Sequelize.STRING
       },

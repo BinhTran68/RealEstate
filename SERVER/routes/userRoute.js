@@ -6,6 +6,7 @@ const { verifyToken } = require("../middlewares/verifyToken");
 
 
 router.get('/current', verifyToken, userController.getCurrentUser )
+router.get('/roles', userController.getRoles)
 
 
 module.exports = router

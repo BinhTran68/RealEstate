@@ -12,13 +12,15 @@ import Dashboard from '~/pages/admin/Dashboard';
 import CreateaPropertyType from '~/pages/admin/property-type/CreateaPropertyType';
 import ManagePropertyType from '~/pages/admin/property-type/ManagePropertyType';
 
+
 const App = () => {
     const { isShowModal } = useAppStore();
 
-    const { getCurrentUser, current, token } = useUserStore();
+    const { getCurrentUser, current, token, getRoles } = useUserStore();
     useEffect(() => {
         if (token) {
-            getCurrentUser()
+            getCurrentUser(),
+            getRoles()
         }
     }, [token])
 

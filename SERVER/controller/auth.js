@@ -1,17 +1,33 @@
 const asyncHandler = require('express-async-handler')
 const db = require("../models")
-const  bcrypt =  require("bcrypt")
+const bcrypt = require("bcrypt")
 const {throwErrorWithStatus} = require("../middlewares/errorHandler");
 const {sign} = require("jsonwebtoken");
+
 
 
 // Bọc asyncHandler để xử lí exception và validate
 const register = asyncHandler(async (req, res, next) => {
     const {password, phone, name, role} = req.body;
-    const response = await db.User.findOrCreate({where: {phone: phone}, defaults: req.body })
-    // if (!response[1]) {
-    //     return  throwErrorWithStatus(409, "PhoneNumber already had exits",res, next);
-    // }
+    const response = await db.User.findOrCreate(
+        {
+            where: {phone: phone},
+            defaults: {
+                phone, password,name
+            }
+        })
+    const userId = response[0]?.id;
+    const roleCode = ['CUSTOMER']
+    if (userId) {
+        if (role) {
+            roleCode.push(role)
+        }
+        const roleCodeBulk = roleCode.map((role) => ({userId, roleCode: role}))
+        const updateRole =  await db.User_Role.bulkCreate(roleCodeBulk);
+        if (!updateRole) {
+            await  db.User.destroy({where: {id:userId}})
+        }
+    }
     return res.json({
         success: response[1],
         message: response[1] ? 'Your account is created.' : 'PhoneNumber already had exits'
@@ -23,7 +39,7 @@ const register = asyncHandler(async (req, res, next) => {
 const signIn = asyncHandler(async (req, res, next) => {
     const {phone, password} = req.body;
     const user = await db.User.findOne({
-        where: { phone }
+        where: {phone}
     })
     if (!user) {
         return throwErrorWithStatus(403, "Vui lòng đăng kí", res, next)
@@ -43,6 +59,6 @@ const signIn = asyncHandler(async (req, res, next) => {
 
 // Export 1 hàm 
 module.exports = {
-   register,signIn
+    register, signIn
 
 }

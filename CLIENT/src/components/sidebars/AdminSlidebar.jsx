@@ -44,9 +44,9 @@ const AdminSlidebar = () => {
                   {activeTabs.some(tabId => tabId === el.id) ? <FaAngleDown /> : <FaAngleRight />}
                 </span>
               </div>
-              {activeTabs.some(tab => tabId => tabId === el.id) && <div className=''>
+              {activeTabs.some(tab => tabId => tabId === el.id) && <div className='fade-in-top'>
                 {el.subs.map(subMenu =>
-                  <NavLink to={subMenu.path} key={subMenu.id} className={({ isActive }) => clsx(' flex items-center gap-2 w-full px-4 py-3 hover:border-r-4 border-orange-600 hover:bg-main-800', isActive && 'border-r-4  bg-main-800')}>
+                  <NavLink to={subMenu.path} key={subMenu.id} className={({ isActive }) => clsx('flex items-center gap-2 w-full px-4 py-3  hover:border-r-4 border-orange-600 hover:bg-main-800', isActive && 'border-r-4  bg-main-800')}>
                     <span className='select-none' >{subMenu.name}</span>
                   </NavLink>
                 )}

@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const db = require("../models")
 const bcrypt = require("bcrypt")
-const {getUserByID} = require("../service/userService");
+const { getUserByID } = require("../service/userService");
 
 
 const getCurrentUser = asyncHandler(async (req, res, next) => {
@@ -14,7 +14,20 @@ const getCurrentUser = asyncHandler(async (req, res, next) => {
         currentUser : user
     })
 })
+const getRoles = asyncHandler(async (req, res, next) => {
+    const roles = await db.Role.findAll(
+        {
+            attributes: ["code", "value"]
 
+        }
+    )
+    return res.status(roles?200:404).json({
+        success: Boolean(roles),
+        message: roles ? 'Got' : 'Cannot get user',
+        roles : roles
+    })
+})
 module.exports = {
-    getCurrentUser
+    getCurrentUser,
+    getRoles
 }

@@ -5,19 +5,19 @@ const ENUM_STATUS_PROPERTY = ['PENDING', 'CANCEL', 'APPROVED']
 const roles = [
     {
         code: 'ADMIN',
-        value: 'Quản Trị Viên'  // ROL1
+        value: 'Admin'  // ROL1
     },
     {
         code: 'PROPERTY_OWNER', // ROL3
-        value: 'Chủ tài sản'
+        value: 'Owner'
     },
     {
-        code: 'BROKER',  // ROL5
-        value: 'Người môi giới'
+        code: 'AGENT',  // ROL5
+        value: 'Agent'
     },
     {
-        code: 'CLIENT', // ROL7
-        value: 'Khách hàng'
+        code: 'CUSTOMER', // ROL7
+        value: 'Customer'
     },
 ]
 

@@ -8,7 +8,7 @@ const AdminLayout = () => {
       <div className='col-span-2  bg-main-600 text-white max-h-screen overflow-y-auto'>
         <AdminSlidebar/>
       </div>
-      <div className='col-span-10'>
+      <div className='col-span-10 max-h-screen overflow-y-auto'>
         <Outlet/>
       </div>
     </main>

@@ -33,6 +33,13 @@ module.exports = {
           key: "id"
         }
       },
+      owner: {
+        type: Sequelize.UUID,
+        references: {
+          model: "Users",
+          key: "id"
+        }
+      },
       status: {
         type: Sequelize.ENUM(ENUM_STATUS_PROPERTY),
         allowNull: false,
