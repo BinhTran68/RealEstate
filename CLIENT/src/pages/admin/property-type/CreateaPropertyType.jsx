@@ -5,6 +5,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { useForm } from 'react-hook-form';
 import Texterea from '~/components/inputs/Texterea';
 import InputFile from '~/components/inputs/InputFile';
+import InputFileNotSendCloud from '~/components/inputs/InputFileNotSendCloud';
 
 
 const CreateaPropertyType = () => {
@@ -38,18 +39,25 @@ const CreateaPropertyType = () => {
            register={register}
            inputClassname={"rounded-md"}
            errors={errors}
-           setValue={setValue}
            label={'Description'}
            validate={{required: "This field can't emplty"}}
         />
 
-        <InputFile
-           id={'file'}
-           register={register}
-           errors={errors}
-           label={'file'}
+        {/* <InputFile
+           id={'images'}
+           label={'Image'}
            validate={{required: "This field can't emplty"}}
+           multiple={true}
+          getImages={images => setValue('images', images)}
+        /> */}
+
+        <InputFileNotSendCloud
+            id={'images'}
+            label={'Image'}
+            validate={{required: "This field can't emplty"}}
+           getImages={images => setValue('images', images)}
         />
+
 
       </form>
     </div>
