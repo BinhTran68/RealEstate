@@ -20,26 +20,24 @@ const InputFileNotSendCloud = ({
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
+    if (!file) {
+      return;
+    }
     if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
      return false;
     }
     if (file) {
-      setImagesFile((prevImages) => [...prevImages, file])
-      const prevImages = images
       let reader = new FileReader()
-      const urlFile = reader.readAsDataURL(file)
-      reader.onload = function (e) {
-        const urlFile = e.target.result; // Lấy URL base64 sau khi quá trình đọc hoàn tất
-        const prevImages = [...images]; // Tạo một bản sao mới của mảng images để tránh thay đổi trực tiếp
-        console.log(prevImages);
-        prevImages.push(urlFile); // Thêm URL base64 mới vào mảng prevImages
-        setImages(prevImages); // Cập nhật state images với mảng prevImages mới
+      const urlFile = reader.readAsDataURL(file)  
+      reader.onload = function (e) {   
+        const urlFile = e.target.result;
+        setImagesFile((prevImages) => [...prevImages, file])
+        setImages(prevImagesUrl => [...prevImagesUrl, urlFile]); 
       };
     }
   }
 
   const handleRemoveFile = (index) => {
-    console.log(index);
     const tempImages = [...images];
     const tempImageFiles = [...imageFiles];
     tempImages.splice(index, 1)
