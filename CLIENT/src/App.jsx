@@ -19,9 +19,9 @@ const App = () => {
     const { getCurrentUser, current, token, getRoles } = useUserStore();
     useEffect(() => {
         if (token) {
-            getCurrentUser(),
-            getRoles()
+            getCurrentUser()
         }
+        getRoles()
     }, [token])
 
     return (

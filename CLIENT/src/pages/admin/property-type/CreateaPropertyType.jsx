@@ -1,51 +1,73 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, InputFrom } from '~/components'
 import Title from '~/components/commons/Title'
 import { CiCirclePlus } from "react-icons/ci";
 import { useForm } from 'react-hook-form';
 import Texterea from '~/components/inputs/Texterea';
 import InputFile from '~/components/inputs/InputFile';
-import InputFileNotSendCloud from '~/components/inputs/InputFileNotSendCloud';
+import InputImageFiles from '~/components/inputs/InputImageFiles';
 import { apiUploadImages } from '~/api/beyond'
 import { toast } from 'react-toastify';
+import { apiCreateNewPropertyType } from '~/api/propertyTypeApi';
+import ComponentSpinner from '~/components/commons/ComponentSpinner';
 
 
 const CreateaPropertyType = () => {
 
-  const { register, formState: { errors }, handleSubmit, reset, setValue } = useForm()
+  const { register, formState: { errors }, setError, clearErrors, handleSubmit, reset, setValue } = useForm()
   const [isLoading, setIsLoading] = useState(false)
-  const [images, setImages] = useState([])
+  const [clearImages, setClearImages] = useState(false)
 
   const hadleCreateNewPropertyType = async (data) => {
     // When submit. Loop arr File then Save by Clould
     setIsLoading(true)
-    console.log(data);
     const upLoadPromises = []
     const formData = new FormData();
+    if (data.images.length < 1) {
+      setError('images', { type: 'manual', message: "This field can't be empty" });
+      return;
+    }
     for (const image of data.images) {
       formData.append('file', image)
       formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET)
       upLoadPromises.push(apiUploadImages(formData))
     }
-    const response = await Promise.all(upLoadPromises);
-    if (response && response.length > 0) {
-      for (const result of response) {
+    const responseSendToCloud = await Promise.all(upLoadPromises);
+    if (responseSendToCloud && responseSendToCloud.length > 0) {
+      for (const result of responseSendToCloud) {
         if (result.status === 200) {
-          setImages(prevImages => [...prevImages, {id: result.data.public_id, path: result.secure_url}])
+          data.image = result?.data.secure_url
+          delete data.images;
         }
       }
     } else {
       toast.error("Something went wrong")
-    }
+      return;
+    } 
+
+    await apiCreateNewPropertyType(data).then((res)=> {
+      if (res.success) {
+        toast.success(res.message)
+        reset()
+        setClearImages(true)
+      }
+    })
+  
     setIsLoading(false)
   }
 
+
+
   return (
     <div className=''>
+      {isLoading && <ComponentSpinner />}
       <div>
         <Title title={"Create New Property Type"}>
-          <Button handleOnclick={handleSubmit(hadleCreateNewPropertyType)} className={"flex justify-between "}>
-            <CiCirclePlus size={21} /><span>&nbsp; Create</span>
+          <Button
+            disabled={isLoading}
+            className={"font-semibold"}
+            handleOnclick={handleSubmit(hadleCreateNewPropertyType)} >
+            Create
           </Button>
         </Title>
       </div>
@@ -67,26 +89,21 @@ const CreateaPropertyType = () => {
           label={'Description'}
           validate={{ required: "This field can't emplty" }}
         />
-
-        {/* <InputFile
-           id={'images'}
-           label={'Image'}
-           validate={{required: "This field can't emplty"}}
-           multiple={true}
-          getImages={images => setValue('images', images)}
-        /> */}
-
-        <InputFileNotSendCloud
+        <InputImageFiles
           id={'images'}
           label={'Image'}
-          validate={{ required: "This field can't emplty" }}
           getImages={images => setValue('images', images)}
+          multiple={false}
+          errors={errors}
+          clearError={clearErrors}
+          resetImages={clearImages}
         />
-
-
       </form>
+
     </div>
   )
+
+
 }
 
 export default CreateaPropertyType

@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { Fragment, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '~/assets/Logo-HapplyHome.png'
-import { adminSidebar } from '~/utils/contants'
+import { adminNavigations } from '~/navigation/AdminNavigation'
 import { FaAngleRight } from "react-icons/fa"
 import { FaAngleDown } from "react-icons/fa";
 
@@ -25,7 +25,7 @@ const AdminSlidebar = () => {
         <small className='text-red-300 italic '>Admin workspace</small>
       </div>
       <div className='mt-6'>
-        {adminSidebar.map(el => <Fragment key={el.id}>
+        {adminNavigations.map(el => <Fragment key={el.id}>
           {/* isActive of NavLink can  */}
           {el.type === 'SINGLE' &&
             <NavLink to={el.path} className={({ isActive }) => clsx('flex items-center gap-2 w-full px-4 py-3 hover:border-r-4 border-orange-600 hover:bg-main-800', isActive && 'border-r-4  bg-main-800')}>
@@ -49,7 +49,7 @@ const AdminSlidebar = () => {
                   <NavLink to={subMenu.path} key={subMenu.id} className={({ isActive }) => clsx('flex items-center gap-2 w-full px-4 py-3  hover:border-r-4 border-orange-600 hover:bg-main-800', isActive && 'border-r-4  bg-main-800')}>
                     <span className='select-none' >{subMenu.name}</span>
                   </NavLink>
-                )}
+               )} 
               </div>}
             </>
           }

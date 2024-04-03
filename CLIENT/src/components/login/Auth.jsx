@@ -7,19 +7,21 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { useAppStore } from '~/store/useAppStore';
 import { useUserStore } from '~/store/useUserStore';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import auth from '~/utils/firebaseConfig';
+import OtpVerifier from './OtpVerifier';
 
 
 const Auth = () => {
 
   const [variant, setVariant] = useState('LOGIN');
+  const { register, formState: { errors }, handleSubmit, reset } = useForm();
+  const [ isLoading, setIsLoading] = useState(false);
+  const { setModal } = useAppStore();
+  const { token, setToken, roles } = useUserStore();
+  const [isShowConfirmOTP, setIsShowConfirmOTP] = useState(false)
 
-  const { register, formState: { errors }, handleSubmit, reset } = useForm(); 
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { setModal }  = useAppStore();
-
-  const { token ,setToken,roles } = useUserStore();
 
   console.log(token);
 
@@ -27,28 +29,62 @@ const Auth = () => {
     reset()
   }, [variant])
 
-  
+
+  const handleCaptchaVerify = () => {
+    if (!window.recaptchaVerify) {
+      window.recaptchaVerify = new RecaptchaVerifier(
+        auth, 
+        'recaptcha-verifier', 
+        
+
+        );
+    }
+  }
+
+  const handleSendOTP = (phone) => {
+    setIsLoading(true)
+    handleCaptchaVerify();
+    const verifier = window.recaptchaVerify
+    const formatPhone = '+84' + phone.slice(1);
+    signInWithPhoneNumber(auth, formatPhone, verifier )
+    .then((result) => {
+      toast.success("Sented OTP to your phone. ")
+      setIsLoading(false)
+      setIsShowConfirmOTP(true)
+    }).catch((e)=> {
+      console.log(e);
+      setIsLoading(false)
+      toast.error("Can't verify your phone number")
+    })
+  }
+
+
   const handleOnSubmit = async (data) => {
     if (variant === "REGISTER") {
-      setIsLoading(true);
-      const respone = await apiRegister(data);
-      setIsLoading(false);
-      if (respone.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Congrats',
-          text: respone.message,
-          showConfirmButton: true,
-          confirmButtonText: 'Go sign in'
-        }).then(({ isConfirmed }) => {
-          if (isConfirmed) setVariant("LOGIN")
-        })
-      } else {
-        toast.error(respone.message)
+      if (data?.roleCode !== 'CUSTOMER') {
+        handleSendOTP(data.phone);
       }
-    }else {
-      const {name, role, ...payload} = data 
-      setIsLoading(true);  
+
+      console.log(data);
+      // setIsLoading(true);
+      // const respone = await apiRegister(data);
+      // setIsLoading(false);
+      // if (respone.success) {
+      //   Swal.fire({
+      //     icon: 'success',
+      //     title: 'Congrats',
+      //     text: respone.message,
+      //     showConfirmButton: true,
+      //     confirmButtonText: 'Go sign in'
+      //   }).then(({ isConfirmed }) => {
+      //     if (isConfirmed) setVariant("LOGIN")
+      //   })
+      // } else {
+      //   toast.error(respone.message)
+      // }
+    } else {
+      const { name, role, ...payload } = data
+      setIsLoading(true);
       const respone = await apiLogin(payload);
       if (respone.success) {
         console.log(respone);
@@ -64,7 +100,11 @@ const Auth = () => {
   return (
     // Xỉ triger cho sự kiện onclick e => e.stopPropagation()
     <div onClick={e => e.stopPropagation()}
-      className='bg-white text-lg rounded-md px-6 w-[500px]  py-8 flex flex-col items-center gap-6'>
+      className='bg-white relative text-lg rounded-md px-6 w-[500px]  py-8 flex flex-col items-center gap-6'>
+      <div className='absolute inset-0 bg-red-400'>
+        <OtpVerifier/>
+      </div>
+      <div id='recaptcha-verifier'></div>
       <h1 className='text-3xl  font-semibold tracking-tighter'>Well come to BatDongSan.Com</h1>
       <div className='flex border-b  w-full justify-start gap-6 '>
         <span
@@ -123,7 +163,7 @@ const Auth = () => {
             id={'role'}
             type='text'
             validate={{ required: 'This field cannot empty.' }}
-            options={roles?.filter(el => el.code !== "ADMIN").map(el => ({label: el.value, value: el.code}))}
+            options={roles?.filter(el => el.code !== "ADMIN").map(el => ({ label: el.value, value: el.code }))}
           />
         }
         <Button handleOnclick={handleSubmit(handleOnSubmit)} disabled={isLoading} className={'py-2 mt-5 mb-2 '}>
