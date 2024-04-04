@@ -17,11 +17,9 @@ const Navigation = ({ location }) => {
 
   const { setModal } = useAppStore();
 
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
-  const { t, i18n } = useTranslation()
-
-  const [currentLanguage, setCurrentLanguage] = useState('en')
+ 
 
   return (
     <div className={twMerge(clsx('h-[85px] bg-transparent flex items-center justify-between fixed w-full z-50 top-[85px] px-[100px] py-[26px]',
@@ -51,15 +49,7 @@ const Navigation = ({ location }) => {
           <Button children={"Add listing"} className={twMerge(clsx(location.pathname === '/' && 'bg-transparent border text-main-500 border-main-500'))} >
           </Button>
         }
-        <button
-          className="btn btn-primary me-2"
-          onClick={() => {
-            setCurrentLanguage(currentLanguage === "en" ? "vi" : "en")
-            i18n.changeLanguage(currentLanguage === "en" ? "vi" : "en")
-          }}
-        >
-          Change language EN - VI
-        </button>
+       
 
 
       </div>

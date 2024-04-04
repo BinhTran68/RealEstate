@@ -1,5 +1,5 @@
-import translationVI  from '~/translation/vi/translation.json'
-import translationEN  from '~/translation/en/translation.json'
+import translationVI  from '~/translation/vi/vi.json'
+import translationEN  from '~/translation/en/en.json'
 import { initReactI18next } from 'react-i18next'
 import i18next from 'i18next'
 

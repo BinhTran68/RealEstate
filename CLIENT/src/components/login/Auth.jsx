@@ -10,13 +10,16 @@ import { useUserStore } from '~/store/useUserStore';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import auth from '~/utils/firebaseConfig';
 import OtpVerifier from './OtpVerifier';
+import { twMerge } from 'tailwind-merge';
+import { data } from 'autoprefixer';
+
 
 
 const Auth = () => {
 
   const [variant, setVariant] = useState('LOGIN');
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
-  const [ isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { setModal } = useAppStore();
   const { token, setToken, roles } = useUserStore();
   const [isShowConfirmOTP, setIsShowConfirmOTP] = useState(false)
@@ -33,11 +36,11 @@ const Auth = () => {
   const handleCaptchaVerify = () => {
     if (!window.recaptchaVerify) {
       window.recaptchaVerify = new RecaptchaVerifier(
-        auth, 
-        'recaptcha-verifier', 
-        
+        auth,
+        'recaptcha-verifier',
 
-        );
+
+      );
     }
   }
 
@@ -46,16 +49,17 @@ const Auth = () => {
     handleCaptchaVerify();
     const verifier = window.recaptchaVerify
     const formatPhone = '+84' + phone.slice(1);
-    signInWithPhoneNumber(auth, formatPhone, verifier )
-    .then((result) => {
-      toast.success("Sented OTP to your phone. ")
-      setIsLoading(false)
-      setIsShowConfirmOTP(true)
-    }).catch((e)=> {
-      console.log(e);
-      setIsLoading(false)
-      toast.error("Can't verify your phone number")
-    })
+    signInWithPhoneNumber(auth, formatPhone, verifier)
+      .then((result) => {
+        toast.success("Sented OTP to your phone. ")
+        setIsLoading(false)
+        window.confirmOTP = result
+        setIsShowConfirmOTP(true)
+      }).catch((e) => {
+        console.log(e);
+        setIsLoading(false)
+        toast.error("Can't verify your phone number")
+      })
   }
 
 
@@ -66,22 +70,7 @@ const Auth = () => {
       }
 
       console.log(data);
-      // setIsLoading(true);
-      // const respone = await apiRegister(data);
-      // setIsLoading(false);
-      // if (respone.success) {
-      //   Swal.fire({
-      //     icon: 'success',
-      //     title: 'Congrats',
-      //     text: respone.message,
-      //     showConfirmButton: true,
-      //     confirmButtonText: 'Go sign in'
-      //   }).then(({ isConfirmed }) => {
-      //     if (isConfirmed) setVariant("LOGIN")
-      //   })
-      // } else {
-      //   toast.error(respone.message)
-      // }
+
     } else {
       const { name, role, ...payload } = data
       setIsLoading(true);
@@ -97,13 +86,30 @@ const Auth = () => {
 
   }
 
+  const handleRegister = async () => {
+    const respone = await apiRegister(data);
+    if (respone.success) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Congrats',
+        text: respone.message,
+        showConfirmButton: true,
+        confirmButtonText: 'Go sign in'
+      }).then(({ isConfirmed }) => {
+        if (isConfirmed) setVariant("LOGIN")
+      })
+    } else {
+      toast.error(respone.message)
+    }
+  }
+
   return (
     // Xỉ triger cho sự kiện onclick e => e.stopPropagation()
     <div onClick={e => e.stopPropagation()}
-      className='bg-white relative text-lg rounded-md px-6 w-[500px]  py-8 flex flex-col items-center gap-6'>
-      <div className='absolute inset-0 bg-red-400'>
-        <OtpVerifier/>
-      </div>
+      className={twMerge(clsx('bg-white relative text-lg rounded-md px-6 w-[500px]  py-8 flex flex-col items-center gap-6'))}>
+        {isShowConfirmOTP &&  <div className='absolute w-[600px] bg-inherit rounded-md'>
+        <OtpVerifier phone={data.phone} callBackRegister={handleRegister} />
+      </div>}
       <div id='recaptcha-verifier'></div>
       <h1 className='text-3xl  font-semibold tracking-tighter'>Well come to BatDongSan.Com</h1>
       <div className='flex border-b  w-full justify-start gap-6 '>

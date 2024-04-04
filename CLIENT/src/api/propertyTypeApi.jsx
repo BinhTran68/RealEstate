@@ -6,3 +6,4 @@ export const apiCreateNewPropertyType = (data) => axios({
     data
 })
 
+
