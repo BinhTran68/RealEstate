@@ -5,8 +5,6 @@ const validateDTO = require('../middlewares/validation')
 const Joi = require("joi");
 const {stringRequired, string} = require("../middlewares/joiSchema");
 const {rateLimiter} = require("../middlewares/rateLimiter");
-
-
 router.use(rateLimiter)
 router.post('/',
     verifyToken,
