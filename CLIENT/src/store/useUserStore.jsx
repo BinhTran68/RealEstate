@@ -25,7 +25,9 @@ export const useUserStore = create(persist((set, get) => ({
         }else {
             return set(() => ({ roles: []}))
         }
-    }
+    },
+    Logout: () => set(() => ({token: null ,current: null})) 
+
 }),
     {
         name: 'BatDongSan.com',

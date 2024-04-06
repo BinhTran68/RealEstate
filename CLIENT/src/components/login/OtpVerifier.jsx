@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import OtpInput from 'react-otp-input';
 import { Button } from '..';
+import { toast } from 'react-toastify'
 
-const OtpVerifier = ({phone, callBackRegister }) => {
+const OtpVerifier = ({phone, callBackRegister,callBackSuccess }) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -11,12 +12,14 @@ const OtpVerifier = ({phone, callBackRegister }) => {
 
   const handleConfirmOTP = () => {
     setIsLoading(true);
-    window.confirmOTP.confirm(otp).then((result) => {
-      callBackRegister()
-      console.log(result);
+    window.confirmationResult.confirm(otp).then((result) => {
       setIsLoading(false)
+      toast.success("Xác thực thành công")
+      callBackSuccess()
+      callBackRegister()
     }).catch((e) => {
       setIsLoading(false)
+      toast.error("OTP không chính xác")
     })
   }
 
@@ -36,7 +39,7 @@ const OtpVerifier = ({phone, callBackRegister }) => {
         shouldAutoFocus={true}
       />
       <div className='flex items-center justify-center gap-5'>
-        <Button handleOnclick={handleConfirmOTP}>
+        <Button handleOnclick={handleConfirmOTP} disabled={isLoading}>
           Confirm OTP
         </Button>
 
