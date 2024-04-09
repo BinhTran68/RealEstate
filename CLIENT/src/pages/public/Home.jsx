@@ -1,5 +1,6 @@
 import React from 'react'
 import imgBanner from '~/assets/nhaDepBaner.jpg'
+import Search from '~/components/search/Search'
 
 const Home = () => {
   return (
@@ -18,6 +19,9 @@ const Home = () => {
               volutpat.</span>
           </p>
         </div>
+      </div>
+      <div>
+        <Search/>
       </div>
       <div className='w-main mx-auto '>
         Content

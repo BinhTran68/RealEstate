@@ -19,7 +19,7 @@ const TopHeader = ({ location }) => {
 
     useEffect(() => {
         const handlerOnclick = (e) => {
-            if (optionBoxUsers.current.contains(e.target)) {
+            if (optionBoxUsers.current && optionBoxUsers.current.contains(e.target)) {
                 setIsShowOptions(true)
             }else {
                 setIsShowOptions(false)

@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const db = require("../models")
 const bcrypt = require("bcrypt")
 const { roles } = require("../utils/constants");
+const propertyTypeService = require("../service/properties-type-sevices/propertyTypeService");
 
 
 const createNewProperty = asyncHandler(async (req, res, next) => {
@@ -12,6 +13,16 @@ const createNewProperty = asyncHandler(async (req, res, next) => {
         message: user ? 'Got' : 'Cannot get user',
         currentUser : user
     })
+})
+
+const getPropertyController = asyncHandler(async (req, res) => {
+    const {limit, page, fields, sort, ...query} = req.query
+    const response = await propertyTypeService.getPropertyTypes(limit, page, fields, sort, query);
+    return res.status(response.success ? 200 : 404).json({
+        success: response.success,
+        message: response.success ? "Got" : "PropertyType not found!",
+        propertyTypes: response.data
+    });
 })
 
 module.exports = {

@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const propertyTypeService = require("../service/propertyTypeService")
+const propertyTypeService = require("../service/properties-type-sevices/propertyTypeService")
 const {throwErrorWithStatus} = require("../middlewares/errorHandler");
 
 
@@ -17,6 +17,7 @@ const createNewPropertyType = asyncHandler(async (req, res) => {
 const getPropertyTypesController = asyncHandler(async (req, res) => {
     const {limit, page, fields, sort, ...query} = req.query
     const response = await propertyTypeService.getPropertyTypes(limit, page, fields, sort, query);
+    console.log(response)
     return res.status(response.success ? 200 : 404).json({
         success: response.success,
         message: response.success ? "Got" : "PropertyType not found!",
