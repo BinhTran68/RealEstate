@@ -1,8 +1,8 @@
 const asyncHandler = require('express-async-handler')
-const db = require("../models")
+const db = require("../../../models")
 const bcrypt = require("bcrypt")
-const { roles } = require("../utils/constants");
-const propertyTypeService = require("../service/properties-type-sevices/propertyTypeService");
+const { roles } = require("../../../utils/constants");
+const propertyTypeService = require("../../properties-type/service/propertyTypeService");
 
 
 const createNewProperty = asyncHandler(async (req, res, next) => {

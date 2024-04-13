@@ -1,6 +1,6 @@
 const {Op} = require("sequelize");
-const redis = require("../../config/redis.config");
-const db = require("../../models");
+const redis = require("../../../config/redis.config");
+const db = require("../../../models");
 const getProperty = async (limit, page, fields, sort, query) => {
     const options = {};
     const result = {}

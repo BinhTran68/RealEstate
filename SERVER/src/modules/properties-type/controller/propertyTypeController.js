@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler')
-const propertyTypeService = require("../service/properties-type-sevices/propertyTypeService")
-const {throwErrorWithStatus} = require("../middlewares/errorHandler");
+const propertyTypeService = require("../service/propertyTypeService")
+const {throwErrorWithStatus} = require("../../../middlewares/errorHandler");
 
 
 const createNewPropertyType = asyncHandler(async (req, res) => {

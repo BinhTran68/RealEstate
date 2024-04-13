@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const propertyTypeController = require('../controller/propertyTypeController')
+const propertyTypeController = require('../modules/properties-type/controller/propertyTypeController')
 const {verifyToken, isAdmin} = require("../middlewares/verifyToken");
 const validateDTO = require('../middlewares/validation')
 const Joi = require("joi");

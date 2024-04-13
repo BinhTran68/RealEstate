@@ -1,5 +1,5 @@
 'use strict';
-const {ENUM_STATUS_PROPERTY, ENUM_LISTING_TYPE} = require("../utils/constants");
+const {ENUM_STATUS_PROPERTY, ENUM_LISTING_TYPE} = require("../src/utils/constants");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {

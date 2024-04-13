@@ -1,7 +1,7 @@
-const db = require("../../models")
+const db = require("../../../models")
 const {Op} = require("sequelize");
-const redis = require("../../config/redis.config")
-const {querySortByOptions, queryWhereOptions, executeQuery, queryPagination} = require("../builder-query/executeGetQuery");
+const redis = require("../../../config/redis.config")
+const {querySortByOptions, queryWhereOptions, executeQuery, queryPagination} = require("../../../builder-query/executeGetQuery");
 
 
 const createNewPropertyTypeQuery = async (name, values) => {

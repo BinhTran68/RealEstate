@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const insertRoleController = require('../controller/insert')
+const insertRoleController = require('../modules/insert-data/insert')
 
 
 router.post('/roles',  insertRoleController.insertRoles )
