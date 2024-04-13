@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const db = require("../models")
+const db = require("../../../models");
 const bcrypt = require("bcrypt")
 const { getUserByID } = require("../service/userService");
 

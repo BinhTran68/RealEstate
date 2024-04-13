@@ -1,9 +1,9 @@
 const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
-const dbConn = require("./config/DBConnect")
-const initRoutes = require('./routes')
-require("./config/redis.config")
+const dbConn = require("./src/config/DBConnect")
+const initRoutes = require('./src/routes')
+require("./src/config/redis.config")
 
 const app = express();
 // Config truy cập tài nguyên

@@ -19,10 +19,10 @@ const Navigation = ({ location }) => {
 
   const { t } = useTranslation();
 
- 
+
 
   return (
-    <div className={twMerge(clsx('h-[85px] bg-transparent flex items-center justify-between fixed w-full z-50 top-[85px] px-[100px] py-[26px]',
+    <div className={twMerge(clsx('h-[85px] bg-transparent flex items-center justify-between fixed w-full z-10 top-[85px] px-[100px] py-[26px]',
       location.pathname !== '/' && 'bg-main-100'
     ))}>
       <Link to={'/'}>
@@ -49,7 +49,7 @@ const Navigation = ({ location }) => {
           <Button children={"Add listing"} className={twMerge(clsx(location.pathname === '/' && 'bg-transparent border text-main-500 border-main-500'))} >
           </Button>
         }
-       
+
 
 
       </div>

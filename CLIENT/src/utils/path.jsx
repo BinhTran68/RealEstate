@@ -8,9 +8,23 @@ const path = {
 
     // Admin
     ADMIN_LAYOUT: 'admin',
-    DASHBOARD: 'dashboard',
+    ADMIN_DASHBOARD: 'dashboard',
     MANAGE_PROPERTY_TYPE: 'manage-property-type',
-    CREATE_PROPERTY_TYPE: 'create-property-type'
+    CREATE_PROPERTY_TYPE: 'create-property-type',
+
+    // User
+    USER_LAYOUT: 'user',
+    PERSONAL: 'personal',
+
+    // Agent
+    AGENT_LAYOUT: 'agent',
+    AGENT_DASHBOAR: 'dashboard',
+
+    // OWNER
+    OWNER_LAYOUT: 'owner',
+    OWNER_DASHBOAR: 'dashboard'
+    
+
 
 }
 

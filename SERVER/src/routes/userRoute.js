@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const userController = require('../controller/userController')
+const userController = require('../modules/users/controller/userController')
 const Joi = require("joi")
 const { stringRequired, string} = require("../middlewares/joiSchema")
 const { verifyToken } = require("../middlewares/verifyToken");

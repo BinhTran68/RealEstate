@@ -11,6 +11,8 @@ import AdminLayout from '~/pages/admin/AdminLayout';
 import Dashboard from '~/pages/admin/Dashboard';
 import CreateaPropertyType from '~/pages/admin/property-type/CreateaPropertyType';
 import ManagePropertyType from '~/pages/admin/property-type/ManagePropertyType';
+import UserLayout from '~/pages/user/UserLayout';
+import Personal from '~/pages/user/Personal';
 
 
 const App = () => {
@@ -27,7 +29,6 @@ const App = () => {
     return (
         <>
             {isShowModal && <Modal />}
-
             <Routes>
                 <Route path={path.PUBLIC_LAYOUT} element={<PublicLayout />} > // parent
                     <Route path={path.HOME} element={<Home />} />
@@ -36,12 +37,17 @@ const App = () => {
                     <Route path={path.PROPERTIES} element={<Properties />} />
                     <Route path={path.SEARCH} element={<Search />} />
                 </Route>
-                {/* Trang lồng trang  */}
+
                 {/* ADMIN ROUTES */}
                 <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
-                    <Route path={path.DASHBOARD} element={<Dashboard />} />
+                    <Route path={path.ADMIN_DASHBOARD} element={<Dashboard />} />
                     <Route path={path.CREATE_PROPERTY_TYPE} element={<CreateaPropertyType />} />
                     <Route path={path.MANAGE_PROPERTY_TYPE} element={<ManagePropertyType />} />
+                </Route>
+
+                {/* USER ROUTE */}
+                <Route path={path.USER_LAYOUT} element={<UserLayout />}>
+                    <Route path={path.PERSONAL} element={<Personal />} />
                 </Route>
 
             </Routes>

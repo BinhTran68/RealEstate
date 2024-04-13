@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
-const db = require("../models")
+const db = require("../../../models")
 const bcrypt = require("bcrypt")
-const {throwErrorWithStatus} = require("../middlewares/errorHandler");
+const {throwErrorWithStatus} = require("../../../middlewares/errorHandler");
 const {sign} = require("jsonwebtoken");
 
 
