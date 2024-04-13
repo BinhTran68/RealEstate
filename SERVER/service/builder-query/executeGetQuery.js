@@ -17,7 +17,6 @@ const executeQuery = async (Model, query, options) => {
     }
 };
 
-
 const querySortByOptions = (sort) => {
     return sort.split(",").map(el => el.startsWith('-') ? [el.replace("-", ""), 'DESC'] : [el.replace("+", ""), 'ASC']);
 };

@@ -7,6 +7,7 @@ const Home = () => {
     <div className='bg-white w-full ' >
       <div className='w-full h-fit relative'>
         <img src={imgBanner} alt="" className='w-full h-[690px] object-cover' />
+        <div class="absolute inset-0 bg-black bg-opacity-10"></div>
         <div className='absolute inset-0 flex flex-col gap-5 items-center justify-center pt-12'>
           <h1 className=' text-main-800 text-5xl' >Find Your Dream Home</h1>
           <p className=' text-main-800 text-lg  flex flex-col gap-1 items-center justify-center'>
