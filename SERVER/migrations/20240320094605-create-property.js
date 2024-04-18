@@ -52,10 +52,6 @@ module.exports = {
         type: Sequelize.BOOLEAN, // When real estate soled or Leased Agent then set isAvailable == false
         allowNull: false,
       },
-      images: {
-        type: Sequelize.TEXT, // When real estate soled or Leased Agent then set isAvailable == false
-        allowNull: false,
-      },
       featureImages: {
         type: Sequelize.TEXT, // When real estate soled or Leased Agent then set isAvailable == false
         allowNull: false,

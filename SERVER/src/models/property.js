@@ -28,16 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       values: ENUM_STATUS_PROPERTY
     },
     isAvailable : DataTypes.BOOLEAN,
-    images : {
-      type : DataTypes.TEXT,
-      get() {
-        const rawValue  = this.getDataValue('images')  // Get a Array in database. convert array to Json
-        return rawValue ? JSON.parse(rawValue) : []
-      },
-      set(arraysImages) {
-        this.setDataValue('images', JSON.stringify(arraysImages))  // When set value to images column then set Json object images parseString then save to database
-      }
-    },
     featureImages : DataTypes.STRING,
     bedRoom : DataTypes.INTEGER,
     bathRoom : DataTypes.INTEGER,
