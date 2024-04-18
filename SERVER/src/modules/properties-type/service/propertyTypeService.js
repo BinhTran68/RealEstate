@@ -13,6 +13,10 @@ const createNewPropertyTypeQuery = async (name, values) => {
 }
 
 const getPropertyTypes = async (limit, page, fields, sort, query) => {
+    // const alreadyData  = await redis.get("get-property-type");  // Wrong went pagination . Check this page check already bye page
+    // if (alreadyData) {
+    //     return JSON.parse(alreadyData);
+    // }
     const options = {};
     const result = {}
     if (fields) {
@@ -28,6 +32,7 @@ const getPropertyTypes = async (limit, page, fields, sort, query) => {
     const response = await executeQuery(db.PropertyType, query, options);
     result.success = Object.keys(response) && Object.keys(response).length > 0
     result.data = response
+    // redis.set("get-property-type", JSON.stringify(result));
     return result;
 }
 

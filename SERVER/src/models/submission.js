@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Submission.init({
-    propertyId: DataTypes.UUID,
-    userId: DataTypes.UUID,
+    propertyId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     message: DataTypes.TEXT
   }, {
     sequelize,

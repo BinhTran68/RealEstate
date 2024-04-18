@@ -4,27 +4,26 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Comments', {
       id: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal("gen_random_uuid()")
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
       },
       propertyId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: 'Properties',
           key: "id"
         }
       },
       userId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: "Users",
           key: "id"
         }
       },
       parentComment: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

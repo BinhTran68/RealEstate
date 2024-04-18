@@ -5,12 +5,15 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Properties', {
       id: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal("gen_random_uuid()")
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
       },
       name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      address: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -27,14 +30,14 @@ module.exports = {
         allowNull: false
       },
       propertyTypeId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: "PropertyTypes",
           key: "id"
         }
       },
       owner: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: "Users",
           key: "id"
@@ -58,7 +61,7 @@ module.exports = {
         allowNull: false,
       },
       postedBy: {
-        type: Sequelize.UUID, // Who poster?
+        type: Sequelize.INTEGER, // Who poster?
         references: {
           model: "Users",
           key: "id"

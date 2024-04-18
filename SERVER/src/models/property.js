@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       values: ENUM_LISTING_TYPE
     },
     price: DataTypes.FLOAT,
-    propertyTypeId: DataTypes.UUID,
+    propertyTypeId: DataTypes.INTEGER,
     status: {
       type: DataTypes.ENUM,
       values: ENUM_STATUS_PROPERTY
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     bathRoom : DataTypes.INTEGER,
     propertySize : DataTypes.FLOAT,
     yearBuild : DataTypes.INTEGER,
-    owner: DataTypes.UUID,  // Migration 20240323152748-modify_property_add_cloumn_ower.js
+    owner: DataTypes.INTEGER,  // Migration 20240323152748-modify_property_add_cloumn_ower.js
   }, {
     sequelize,
     modelName: 'Property',

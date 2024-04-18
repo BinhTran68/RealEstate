@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Property_Feature.init({
-    propertyId: DataTypes.UUID,
-    featureId: DataTypes.UUID,
+    propertyId: DataTypes.INTEGER,
+    featureId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Property_Feature',

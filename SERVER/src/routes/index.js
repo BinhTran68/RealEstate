@@ -4,6 +4,7 @@ const auth = require('./authRoute')
 const user = require('./userRoute')
 const insert = require('./insertRoute')
 const propertyType = require('./propertyTypeRoute')
+const properties = require('./propertiesRoute')
 
 
 const innitRouters = (app) => {
@@ -11,6 +12,7 @@ const innitRouters = (app) => {
     app.use('/api/user', user)
     app.use('/api/insert', insert)
     app.use('/api/property-types', propertyType)
+    app.use('/api/properties', properties)
 
     app.use('/*', badRequestException)
     app.use(errHandler);
