@@ -2,8 +2,11 @@ import PropertiesCard from '~/pages/public/properties/component/PropertiesCard'
 import {useEffect, useState} from "react";
 import {apiGetProperties} from "~/api/properties.jsx";
 import {LIMIT} from "~/utils/contants.jsx";
-import {Dropdown, Typography, Space} from "antd";
+import {Dropdown} from "antd";
 import {BiCaretDown} from "react-icons/bi";
+import {Button} from "~/components/index.jsx";
+import {twMerge} from "tailwind-merge";
+import clsx from "clsx";
 
 const Properties = () => {
     const items = [
@@ -32,6 +35,8 @@ const Properties = () => {
 
     const [propertiesData, setPropertiesData] = useState();
     const [labelSelectSort, setLabelSelectSort] = useState({ key : '1' , label : 'Sort' });
+        const [modeProperties, setModeProperties] = useState('ALL');
+
 
     const fetchProperties = async () => {
         const response = await apiGetProperties({limit: LIMIT, page: 1})
@@ -67,7 +72,7 @@ const Properties = () => {
             </div>
             {/* Content */}
             <div className='w-main mx-auto my-20'>
-                <div className='my-4 flex justify-between items-center text-sm'>
+                <div className='my-2 flex justify-between items-center text-sm'>
                     <div className=''>
                         <Dropdown
                             menu={{
@@ -77,13 +82,34 @@ const Properties = () => {
                                 defaultSelectedKeys: ['1'],
                             }}
                         >
-                            <div className='flex gap-2 items-center border-b border-main-600 text-main-500'>
+                            <div className='flex gap-2 items-center border-b font-bold border-main-600 text-main-500'>
                                 {labelSelectSort.label}
                                 <BiCaretDown/>
                             </div>
                         </Dropdown>
                     </div>
-                    <div>
+                    <div className='flex items-center justify-center'>
+                        <Button
+                        handleOnclick={() => setModeProperties('ALL') }
+                         className={twMerge(clsx('whitespace-nowrap bg-transparent border-none text-main-500 font-medium', 
+                         modeProperties === 'ALL' && 'font-bold'
+                         ))}>
+                            All Properties
+                        </Button>
+                        <Button
+                        handleOnclick={() => setModeProperties('RENT') }
+                         className={twMerge(clsx('whitespace-nowrap bg-transparent border-none text-main-500 font-medium', 
+                         modeProperties === 'RENT' && 'font-bold'
+                         ))}>
+                            For Rent
+                        </Button>
+                        <Button
+                        handleOnclick={() => setModeProperties('SALE') }
+                         className={twMerge(clsx('whitespace-nowrap bg-transparent border-none text-main-500 font-medium', 
+                         modeProperties === 'SALE' && 'font-bold'
+                         ))}>
+                            For Sale
+                        </Button>
 
                     </div>
                 </div>
