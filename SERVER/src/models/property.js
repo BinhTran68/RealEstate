@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Property.belongsTo(models.User, { foreignKey: 'postedBy', as : 'property_user_posted' })
+      Property.belongsTo(models.User, { foreignKey: 'owner', as : 'property_user_owner' })
+      Property.hasMany(models.Image, { foreignKey: 'propertyId', as: 'property_images' });
     }
   }
   Property.init({
@@ -34,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     propertySize : DataTypes.FLOAT,
     yearBuild : DataTypes.INTEGER,
     owner: DataTypes.INTEGER,  // Migration 20240323152748-modify_property_add_cloumn_ower.js
+    postedBy: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Property',

@@ -20,8 +20,14 @@ const getProperties = async (limit, page, fields, sort, query) => {
         options.where = queryWhereOptions(query)
     }
     queryPagination(options,limit,page);
+
+    options.include =  [
+        {model : db.User, as : 'property_user_posted', attributes : ['id','avatar', 'phone', 'name', 'email']},
+        {model : db.User, as : 'property_user_owner', attributes : ['id','avatar', 'phone', 'name', 'email']},
+        {model : db.Image, as : 'property_images', attributes : ['id', 'link']}
+    ]
+
     const response = await executeQuery(db.Property, query, options);
-    console.log(response)
     result.success = Object.keys(response) && Object.keys(response).length > 0
     result.data = response
     return result;

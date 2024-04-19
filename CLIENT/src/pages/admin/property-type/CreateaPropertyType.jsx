@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Button, InputFrom } from '~/components'
 import Title from '~/components/commons/Title'
-import { CiCirclePlus } from "react-icons/ci";
 import { useForm } from 'react-hook-form';
 import Texterea from '~/components/inputs/Texterea';
-import InputFile from '~/components/inputs/InputFile';
 import InputImageFiles from '~/components/inputs/InputImageFiles';
 import { apiUploadImages } from '~/api/beyond'
 import { toast } from 'react-toastify';
