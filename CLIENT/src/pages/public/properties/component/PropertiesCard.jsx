@@ -8,12 +8,9 @@ import {IoIosCrop} from "react-icons/io";
 import {CiHeart, CiShare2} from "react-icons/ci";
 
 const PropertiesCard = ({properties}) => {
-    useEffect(() => {
-        console.log(properties)
-    }, [properties]);
     return (
-        <div className='border rounded-md col-span-1 '>
-            <img className='w-full h-[240px] rounded-t-md object-cover' src={properties?.featureImages} alt=""/>
+        <div className='border rounded-md '>
+            <img className='h-auto w-full max-w-full rounded-t-md ' src={properties?.featureImages} alt=""/>
             <div className='p-4 flex flex-col gap-2'>
                 <h1 className='text-lg font-medium line-clamp-2 text-gray-700 uppercase '>{properties?.name}</h1>
                 <span className='text-lg text-main-500 font-bold'>

@@ -23,3 +23,9 @@ export const formatNumber = (number) => {
 
     return moneyFormat.format(number)
 }
+
+
+export const renderRagePanigationNumber = ({start, end}) => {
+    const length = end - start+1
+    return Array.from({length},(_, index) => start + index)
+}
